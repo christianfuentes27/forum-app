@@ -24,7 +24,7 @@
             <a class="nav-link" href="{{ url('login') }}">Log in</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('login/logout') }}">Log out</a>
+            <a class="nav-link" href="{{ url('logout/logout') }}">Log out</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('user/create') }}">Register</a>
