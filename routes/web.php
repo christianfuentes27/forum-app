@@ -18,7 +18,7 @@ use App\Http\Controllers\CommentController;
 */
 
 Route::get('/', [PostController::class, 'index']);
-Route::get('logout/logout', [LoginController::class, 'logout']);
+Route::get('logout', [LoginController::class, 'logout']);
 Route::resource('login', LoginController::class)->only(['index', 'show']);
 Route::resource('comment', CommentController::class)->except(['index', 'create', 'show']);
 Route::resource('post', PostController::class)->except(['show']);
