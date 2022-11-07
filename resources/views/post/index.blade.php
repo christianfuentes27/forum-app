@@ -17,9 +17,6 @@
           <p class="card-text text-white-50">{{ $post->user->name }}</p>
           <a href="#" class="comments-btn card-link" key="{{ $post->id }}">{{ App\Models\Comment::where(['idpost' => $post->id])->count()}} comments <i class="fa-sharp fa-solid fa-comments text-white ml-1"></i></a>
           @if(session()->has('user'))
-            @php
-              $user = session()->get('user');
-            @endphp
             @if($post->user->id == session()->get('user')->id && $post->getMinutes($post))
               <a href="{{ url('post/' . $post->id . '/edit') }}" class="card-link">Edit <i class="fa-solid fa-pen text-white ml-1"></i></a>
               <a href="javascript: void(0);" 
