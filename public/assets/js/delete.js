@@ -13,10 +13,12 @@
 
     function confirmDelete(name, url) {
         let form = document.getElementById('deleteForm');
-        if(confirm('Delete ' + name + '?')) {
+        let confirmBtn = document.getElementById('confirmBtn');
+        
+        confirmBtn.addEventListener('click', () => {
             form.action = url;
             form.submit();
-        }
+        });
     }
 
 })();

@@ -1,6 +1,26 @@
 @extends('app.base')
 
 @section('content')
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Confirm delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="confirmBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container mt-4" id="post-container">
   <a href="{{ url('post/create') }}" class="btn btn-primary btn-lg btn-block mb-2">New Post <i class="fa-regular fa-plus ml-1"></i></a>
   
@@ -20,7 +40,9 @@
             @if($post->user->id == session()->get('user')->id && $post->getMinutes($post))
               <a href="{{ url('post/' . $post->id . '/edit') }}" class="card-link">Edit <i class="fa-solid fa-pen text-white ml-1"></i></a>
               <a href="javascript: void(0);" 
-                 class="card-link deletePost"
+                 class="card-link deletePost" 
+                 data-toggle="modal" 
+                 data-target="#staticBackdrop"
                  data-name="{{ $post->title }}"
                  data-url="{{ url('post/' . $post->id )}}">Delete <i class="fa-solid fa-trash text-white ml-1"></i></a>
             @endif
@@ -55,7 +77,9 @@
                     <a href="{{ url('comment/' . $comment->id . '/edit') }}" class="card-link">Edit <i class="fa-solid fa-pen text-white ml-1"></i></a>
                     <a href="javascript: void(0);" 
                        class="card-link deletePost"
-                       data-name="{{ $comment->id }}"
+                       data-name="{{ $comment->id }}" 
+                       data-toggle="modal" 
+                       data-target="#staticBackdrop"
                        data-url="{{ url('comment/' .$comment->id) }}">Delete <i class="fa-solid fa-trash text-white ml-1"></i></a>
                   @endif
                 @endif
