@@ -57,6 +57,10 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        if(!session()->has('user') || !$post->getMinutes($post)) {
+            session()->flash('message', 'Sorry but you cannot do this');
+            return redirect('post');
+        }
         return view('post.edit', ['post' => $post]);
     }
 

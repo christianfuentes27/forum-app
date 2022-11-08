@@ -25,6 +25,10 @@ class CommentController extends Controller
 
     public function edit(Comment $comment)
     {
+        if(!session()->has('user') || !$comment->post->getMinutes($comment)) {
+            session()->flash('message', 'Sorry but you cannot do this');
+            return redirect('post');
+        }
         return view('comment.edit', ['comment' => $comment]);
     }
 
