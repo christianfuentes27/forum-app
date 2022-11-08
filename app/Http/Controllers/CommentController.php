@@ -35,10 +35,12 @@ class CommentController extends Controller
     public function update(CommentCreateRequest $request, Comment $comment)
     {
         try {
-            if($comment->post->getMinutes($comment)) {
-                $comment->update($request->all());
-            } else {
+            if(session()->get('user')->id != $comment->user->id) {
+                session()->flash('message', 'You cannot access to foreign data');
+            } else if(!$comment->post->getMinutes($comment)) {
                 session()->flash('message', 'Time to edit expired');
+            } else {
+                $comment->update($request->all());
             }
             return redirect('post');
         } catch(\Exception $e) {
@@ -50,10 +52,12 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         try {
-            if($comment->post->getMinutes($comment)) {
-                $comment->delete();
-            } else {
+            if(session()->get('user')->id != $comment->user->id) {
+                session()->flash('message', 'You cannot access to foreign data');
+            } else if(!$comment->post->getMinutes($comment)) {
                 session()->flash('message', 'Time to delete expired');
+            } else {
+                $comment->delete();
             }
             return redirect('post');
         } catch(\Exception $e) {

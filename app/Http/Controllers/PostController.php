@@ -74,10 +74,12 @@ class PostController extends Controller
     public function update(PostCreateRequest $request, Post $post)
     {
         try {
-            if($post->getMinutes($post)) {
-                $post->update($request->all());
-            } else {
+            if(session()->get('user')->id != $post->user->id) {
+                session()->flash('message', 'You cannot access to foreign data');
+            } else if(!$post->getMinutes($post)) {
                 session()->flash('message', 'Time to edit expired');
+            } else {
+                $post->update($request->all());
             }
             return redirect('post');
         } catch(\Exception) {
@@ -96,10 +98,12 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         try {
-            if($post->getMinutes($post)) {
-                $post->delete();
-            } else {
+            if(session()->get('user')->id != $post->user->id) {
+                session()->flash('message', 'You cannot access to foreign data');
+            } else if(!$post->getMinutes($post)) {
                 session()->flash('message', 'Time to delete expired');
+            } else {
+                $post->delete();
             }
             return redirect('post');
         } catch(\Exception $e) {
